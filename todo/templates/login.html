@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Todo App</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'todo/favicon.svg' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'todo/auth.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+            
+            {% if error %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+            {% endif %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-user"></i> Username or Email</label>
+                    <input type="text" class="inp" placeholder="Enter username or email" 
+                           id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" class="inp" placeholder="Enter password" 
+                           id="password" name="password" required>
+                </div>
+                <div class="field">
+                    <button type="submit" class="submit-button">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+            </form>
+            <div class="field">
+                <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

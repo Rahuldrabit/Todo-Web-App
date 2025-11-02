@@ -4,34 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Sign Up - Todo App</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'todo/favicon.svg' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'todo/signup.css' %}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'todo/auth.css' %}">
 </head>
 <body>
-    <div class="signup-login-form">
-        <h2>Sign Up</h2>
-        <form method="POST" action="{% url 'signup' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="inp" placeholder="Username" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="inp" placeholder="Email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="inp" placeholder="Password" id="password" name="password" required>
-            </div>
+    <div class="container">
+        <div class="form-wrapper">
+            <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
+            
+            {% if error %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+            {% endif %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" class="inp" placeholder="Choose a username" 
+                           id="username" name="username" value="{{ username|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" class="inp" placeholder="Enter your email" 
+                           id="email" name="email" value="{{ email|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" class="inp" placeholder="Create a password" 
+                           id="password" name="password" required>
+                </div>
+                <div class="field">
+                    <button type="submit" class="submit-button">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </div>
+            </form>
             <div class="field">
-                <input type="submit" class="submit-button" value="Signup">
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
             </div>
-        </form>
-        <div class="field">
-            <a href="/login">Already have an account? Login</a>
         </div>
     </div>
 </body>
